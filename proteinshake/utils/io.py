@@ -207,8 +207,9 @@ def download_url(url, out_path, verbosity=2, chunk_size=10*1024*1024):
 
     """
     file_name = os.path.basename(url)
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
     if os.path.isdir(out_path) or out_path.endswith('/'):
-        out_path += '/'+file_name
+        out_path = os.path.join(out_path, file_name)
     r = requests.get(url, stream=True, headers={'User-Agent': 'XY'})
     r.raise_for_status()
     bar = progressbar(
